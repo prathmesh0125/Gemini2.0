@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import "../styles/main.css";
 import { FaRegCompass } from "react-icons/fa";
 import { FaRegMessage } from "react-icons/fa6";
@@ -7,7 +7,11 @@ import { IoMdCode } from "react-icons/io";
 import { FaMicrophone } from "react-icons/fa";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { IoSendSharp } from "react-icons/io5";
+import { Context } from "../context/Context";
+
 const Main = () => {
+  const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
+
   return (
     <div className="main">
       <div className="nav">
@@ -17,31 +21,31 @@ const Main = () => {
       <div className="main-container">
         <div className="greet">
           <p>
-            <span>Hello ,Dev.</span>
+            <span>Hello, Dev.</span>
           </p>
-          <p>How can i help you today ?</p>
+          <p>How can I help you today?</p>
         </div>
         <div className="cards">
           <div className="card">
-            <p>suggest beautiful places to see on an upcoming road trip</p>
+            <p>Suggest beautiful places to see on an upcoming road trip</p>
             <i>
               <FaRegCompass />
             </i>
           </div>
           <div className="card">
-            <p>Briefly summeriz this concept: urban road trip</p>
+            <p>Briefly summarize this concept: urban road trip</p>
             <i>
               <IoBulbOutline />
             </i>
           </div>
           <div className="card">
-            <p>Brainstrom team bonding activites for our work retreat</p>
+            <p>Brainstorm team bonding activities for our work retreat</p>
             <i>
               <FaRegMessage />
             </i>
           </div>
           <div className="card">
-            <p>Improve the readbilty of the following code</p>
+            <p>Improve the readability of the following code</p>
             <i>
               <IoMdCode />
             </i>
@@ -50,6 +54,8 @@ const Main = () => {
         <div className="main-bottom">
           <div className="search-box">
             <input
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
               type="text"
               name=""
               id=""
@@ -58,13 +64,12 @@ const Main = () => {
             <div>
               <i><MdOutlineAddPhotoAlternate /></i>
               <i><FaMicrophone /></i>
-              <i><IoSendSharp /></i>
+              <i onClick={() => onSent()}><IoSendSharp /></i>
             </div>
           </div>
           <p className="bottom-info">
-            Gemini may display inaccurate info, including About people, so double-check its response. your privacy and Gemini Apps
+            Gemini may display inaccurate info, including about people, so double-check its response. Your privacy and Gemini Apps
           </p>
-
         </div>
       </div>
     </div>
