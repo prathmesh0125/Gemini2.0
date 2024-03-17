@@ -2,6 +2,8 @@ import { createContext } from "react";
 import runChat from "../config/gemini";
 import { useState } from "react";
 export const Context = createContext();
+
+const delayPara = (index, nextword) => {};
 const ContextProvider = (props) => {
   const [input, setInput] = useState("");
   const [recentPrompt, setRecentPrompt] = useState("");
@@ -11,7 +13,23 @@ const ContextProvider = (props) => {
   const [resultData, setResultData] = useState(false);
 
   const onSent = async (prompt) => {
-    await runChat(input);
+    setResultData(" ");
+    setLoading(true);
+    setShowResult(true);
+    setRecentPrompt(input);
+    const response = await runChat(input);
+    let responseArray = response.split("**");
+    let newArray;
+    for (let i = 0; i < responseArray.length; i++) {
+      if (i === 0 || i % 2 !== 1) {
+        newArray += responseArray[i];
+      } else {
+        newArray += "<b>" + responseArray[i] + " </b>";
+      }
+    }
+    setResultData(newArray);
+    setLoading(false);
+    setInput("");
   };
   // onSent("what is react js");
 
