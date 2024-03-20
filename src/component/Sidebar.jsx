@@ -7,13 +7,20 @@ import { FaRegMessage } from "react-icons/fa6";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { MdOutlineHistory } from "react-icons/md";
 import { IoSettings } from "react-icons/io5";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
-
+  const { onSent, prevoisPrompt, setRecentPrompt } = useContext(Context);
+  // for recent data loading
+  const loadPrompt= async(prompt)=>{
+    setRecentPrompt(prompt);
+    await onSent(prompt);
+  }
   return (
     <div className="sidebar">
       <div className="top">
-        <i onClick={()=>setToggle(prev=>!prev) }className="menu">
+        <i onClick={() => setToggle((prev) => !prev)} className="menu">
           {" "}
           <MdMenu />
         </i>
@@ -26,12 +33,16 @@ const Sidebar = () => {
         {toggle ? (
           <div className="recent">
             <p className="recent-title">Recent</p>
-            <div className="recent-entry">
-              <i>
-                <FaRegMessage />
-              </i>
-              <p>What is react ...</p>
-            </div>
+            { prevoisPrompt.map((item, index) => {
+              return (
+                <div key={index} onClick={()=>loadPrompt(item)} className="recent-entry">
+                  <i>
+                    <FaRegMessage />
+                  </i>
+                  <p>{item.slice(0,18)} ...</p>
+                </div>
+              )
+            })}
           </div>
         ) : null}
       </div>
