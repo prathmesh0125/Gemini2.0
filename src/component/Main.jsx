@@ -99,9 +99,11 @@ const Main = () => {
               <i>
                 <FaMicrophone />
               </i>
-              <i onClick={() => onSent()}>
-                <IoSendSharp />
-              </i>
+              {input ? (
+                <i onClick={() => onSent()}>
+                  <IoSendSharp />
+                </i>
+              ) : null}
             </div>
           </div>
           <p className="bottom-info">

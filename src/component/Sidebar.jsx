@@ -11,11 +11,11 @@ import { useContext } from "react";
 import { Context } from "../context/Context";
 const Sidebar = () => {
   const [toggle, setToggle] = useState(false);
-  const { onSent, prevoisPrompt, setRecentPrompt } = useContext(Context);
+  const { onSent, prevoisPrompt, setRecentPrompt,newChat } = useContext(Context);
   // for recent data loading
-  const loadPrompt= async(prompt)=>{
-    setRecentPrompt(prompt);
-    await onSent(prompt);
+  const loadPrompt=async (prompt)=>{
+    setRecentPrompt(prompt),
+    await onSent(prompt)
   }
   return (
     <div className="sidebar">
@@ -24,7 +24,7 @@ const Sidebar = () => {
           {" "}
           <MdMenu />
         </i>
-        <div className="newchat">
+        <div onClick={()=>newChat()} className="newchat">
           <i>
             <FaPlus />
           </i>

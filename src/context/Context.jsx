@@ -15,6 +15,10 @@ const ContextProvider = (props) => {
       setResultData((prev) => prev + nextword);
     }, 75 * index);
   };
+  const newChat=()=>{
+    setLoading(false);
+    setShowResult(false)
+  }
   const onSent = async (prompt) => {
     setResultData("");
     setLoading(true);
@@ -46,11 +50,9 @@ const ContextProvider = (props) => {
       const nextword = newresponseArray[i];
       delayPara(i, nextword + " ");
     }
-    // setResultData
     setLoading(false);
     setInput("");
   };
-  // onSent("what is react js");
 
   const contextValue = {
     prevoisPrompt,
@@ -63,6 +65,7 @@ const ContextProvider = (props) => {
     resultData,
     input,
     setInput,
+    newChat,
   };
   return (
     <Context.Provider value={contextValue}>{props.children}</Context.Provider>
